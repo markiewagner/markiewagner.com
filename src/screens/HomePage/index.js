@@ -8,7 +8,7 @@ export const HomePage = () => {
       <div style={homeStyles.body}>
         {/* Body text */}
         <p>I'm the founder of Delphi Labs, a frontier tech research and advisory firm with a focus on applied AI. </p>
-        <p>We partner with companies to build and go to market with aggressively ambitious applications of new technology.</p>
+        <p>We partner with companies to build and go to market with ambitious applications of new technology.</p>
 
         <p>Our goal is play a mission-critical role in the creation of institutions that matter in the human story.</p>
         <p>Before Delphi, I was a researcher at Stanford and Waymo.</p>
