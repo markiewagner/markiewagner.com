@@ -12,25 +12,6 @@ export const HomePage = () => {
         <p>We partner with companies in a hands-on way to build and go to market with aggressively ambitious applications of new technology.</p>
         <p>Before Delphi, I was a researcher at Stanford and Waymo.</p>
         <p><i>Interests include cult building infrastructure, new nations, psychographics, zk-proof applications, and artificial intelligence (particularly reinforcement learning and graph neural nets).</i></p>
-        {/* Links */}
-        <br />
-        <h2 style={homeStyles.subheading}>Writing</h2>
-        <a style={homeStyles.links} href={"/social-infra"}>
-          Building Modern Social Infrastructure
-        </a>
-        <br />
-        <br />
-        <h2 style={homeStyles.subheading}>Index</h2>
-        <p>
-          <a style={homeStyles.links} href={"/"}>
-            Building Social Infrastructure Snippets
-          </a>
-        </p>
-        <p>
-          <a style={homeStyles.links} href={"/"}>
-            Building Social Infrastructure Resources
-          </a>
-        </p>
       </div>
 
     </div>

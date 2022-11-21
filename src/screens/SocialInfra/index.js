@@ -69,7 +69,7 @@ export const SocialInfra = () => {
           {/* Endnotes */}
           <div style={articleStyles.footnotes}>
             <hr style={articleStyles.divider} />
-            <p>Thanks to Steven Adler, Daniela Amodei, Adam Baybutt, Chris Beiser, Jack Clark, Ryan Cohen, Tyler Cowen, Matt Danzeisen, Steve Dowling, Tad Friend, Lachy Groom, Chris Hallacy, Reid Hoffman, Ingmar Kanitscheider, Oleg Klimov, Matt Knight</p>
+            <p>Thanks to Ginevra Davis for feedback on this post.</p>
           </div>
         </div>
       </div>
