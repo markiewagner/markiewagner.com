@@ -62,14 +62,13 @@ export const SocialInfra = () => {
           <h3 style={articleStyles.heading}>The Future of Social Infrastructure</h3>
           <p>Just as Tiktok made 10x better tooling for short-form mobile video creation and birthed a new kind of creator, 10x better tooling for creating social organizations will birth a new creator specialized in cult creation. Skills include attracting a group rallied around a particular set of values or goals, creating a culturally distinct experience, helping people find their people, and building a rich social world for members. They will be masters of the tools for status legibility and norm enforcement — rituals, sermons, sacrifices, badges, leveling, reputation systems, and more.</p>
           <p>Some groups will look like team sports traversing the massively multiplayer PvP online arena, making money and solving problems. Others could be cousins of businesses, fandoms, clubs, and religions. Every group will have its own objective function for increasing status within itself  — from making good investments, to producing good writing for a publication, to being a virtuous person (whatever that means to the organization). They may serve as the basis of identity in new ways, similar to how one's alma mater is often mentioned in an introduction.</p>
-          <p>Towards Modern Social Infrastructure</p>
           <p>With strong social infrastructure, people can move through a continuous social web of organizations, societies, and friend groups that cover all stages of life. The world looks more interesting when social networks are dense. The highest-agency organizations will quickly become countries, publications, and groups of people on a shared quest. After all, most college organizations do something – throw parties, host hackathons, launch rockets, race electric cars.</p>
           <p>As we reflect on our deathbeds, we'll have lived happier, healthier, and more meaningful lives. With proper infrastructure, social foci will naturally blossom around the activities that give people energy — perhaps one day, both the internet and real world will be happily traversed by teams of individuals undertaking quests and having fun with their friends.</p>
 
           {/* Endnotes */}
           <div style={articleStyles.footnotes}>
             <hr style={articleStyles.divider} />
-            <p>Thanks to Steven Adler, Daniela Amodei, Adam Baybutt, Chris Beiser, Jack Clark, Ryan Cohen, Tyler Cowen, Matt Danzeisen, Steve Dowling, Tad Friend, Lachy Groom, Chris Hallacy, Reid Hoffman, Ingmar Kanitscheider, Oleg Klimov, Matt Knight</p>
+            <p>Thanks to Ginevra Davis for feedback on this post.</p>
           </div>
         </div>
       </div>
