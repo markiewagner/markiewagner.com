@@ -69,8 +69,7 @@ Response:
 ]
 `
 
-const json_cleaned = `
-[
+const json_cleaned = `[
   {
     "department": ["Engineering", "Sales", "Marketing"],
     "preferred": {"GOOGLE": 3, "BING": 1}
