@@ -210,7 +210,7 @@ export const Summ = () => {
           </p>
 
           <h3 style={articleStyles.heading}>How We Built It</h3>
-          <h4 style={articleStyles.heading}>
+          <h4 style={articleStyles.subHeading}>
             Data Pre-processing: Extracting and Embedding the Facts
           </h4>
           <p>
@@ -299,7 +299,7 @@ export const Summ = () => {
             based on transcript tags (eg, only pull from calls with executives).{" "}
           </p>
 
-          <h4 style={articleStyles.heading}>
+          <h4 style={articleStyles.subHeading}>
             Inference: Recursive Summarization and "Database" Creation
           </h4>
 

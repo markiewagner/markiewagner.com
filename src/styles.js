@@ -94,6 +94,12 @@ export const articleStyles = {
     fontWeight: 600,
     marginTop: "50px",
   },
+  subHeading: {
+    fontFamily: "IBM Plex Sans",
+    fontSize: 20,
+    fontWeight: 600,
+    marginTop: "50px",
+  },
   backButton: {
     position: "absolute",
     top: isMobile ? "-40px" : "40px",
