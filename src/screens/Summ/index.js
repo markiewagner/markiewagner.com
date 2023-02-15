@@ -1,8 +1,7 @@
 import React from "react";
 // Images
-import caveman from "../../assets/caveman.png"
-import socialGraphExample from "../../assets/social_graph_example.png";
-import uscSocialGraph from "../../assets/usc_social_graph.png";
+import recursiveSummarization from "../../assets/recursive_summarization.png";
+import preprocessing from "../../assets/preprocessing.png";
 import { articleStyles } from "../../styles";
 import {anOldHope, CopyBlock } from "react-code-blocks";
 
@@ -60,7 +59,7 @@ export const Summ = () => {
         <h2 style={articleStyles.subtitle}>Summ provides intelligent search and question-answering across large sets of transcripts.</h2>
         {/* Author Section */}
         <div style={articleStyles.authorSection}>
-          <p style={articleStyles.date}>Feb 13nd, 2023</p>
+          <p style={articleStyles.date}>Feb 20th, 2023</p>
           <p>Markie Wagner and Yasyf Mohamedali</p>
           <hr style={articleStyles.divider} />
         </div>
@@ -91,7 +90,7 @@ export const Summ = () => {
 
           <p><i>Fact Extraction Example Context and Paragraph</i></p>
           <CopyBlock
-            text={fact_prompt}
+            text={"add code here"}
             language={"text"}
             showLineNumbers={false}
             theme={anOldHope}
@@ -101,7 +100,7 @@ export const Summ = () => {
 
           <p><i>Fact Extraction Example Generated Facts</i></p>
           <CopyBlock
-            text={fact_prompt}
+            text={"add code here"}
             language={"text"}
             showLineNumbers={false}
             theme={anOldHope}
@@ -112,29 +111,160 @@ export const Summ = () => {
 
           <p>For each fact embedding, the following metadata is included: fact, summary of surrounding paragraph, surrounding paragraph facts, and interviewee tags. For each query embeddings, the same metadata is included, with an additional pointer to the fact that this query was generated from.</p>
 
-          <img style={articleStyles.embeds} src={uscSocialGraph} />
+          <img style={articleStyles.embeds} src={preprocessing} />
           <p style={{ ...articleStyles.sidenotes, textAlign: "center" }}>Pre-Processing Pipeline</p>
 
+          <p>In summary, the data pre-processing step of Summ involves extracting and embedding the facts from the transcripts as well as using user-created logic to generate transcript tags. The embeddings are stored in Pinecone along with associated metadata so we can search based on transcript tags (eg, only pull from calls with executives). </p>
+
+          <h4 style={articleStyles.heading}>Inference: Recursive Summarization and "Database" Creation</h4>
+
+          <p>For the inference step, we pick the best result of three methods. The first two methods use LLMs to build structured datasets, creating and populating a "database" with relevant metrics to answer a question. This structured data is then used by the LLM to run calculations on (eg. what percent of users report using spend management features). The last method uses recursive summarization, surfacing and summarizing to eventually answer the query. </p>
+
+          <p><b>Method 1: Structured Data Generation (JSON)</b></p>
+
+          <p>With our first method, we ask GPT what kind of structured data (JSON format) it would need to sufficiently answer the stated question. For each field, it also generates a prompt that it would need to ask itself with each paragraph to extract the relevant metric.</p>
+
+          <p><i>JSON Generation Instructions</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p><i>JSON Generation Example</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p>Using the generated prompts, with each paragraph, the LLM updates the JSON document to include the paragraph's new information.</p>
+          <p>After processing all paragraphs, we then ask the model to clean up the document it's collected, formatting it for use in answering the specific question. Finally, we use this cleaned document to generate an answer to the initial question.</p>
+
+          <p><i>Cleaned Document</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p><i>Example Answer</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p><b>Method 2: Structured Data Generation (SQL)</b></p>
+
+          <p>Similarly to the first method, we use the LLM to turn the unstructured transcript data into structured data, this time in the form of a populated SQL table.</p>
+
+          <p>We begin by asking the model to generate a SQL schema that would represent a table that could answer the query.</p>
+
+          <p><i>SQL Generation Prompt</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p>Next, we begin populating the table. For each paragraph, we represent the new information as a set up of updates/inserts to the SQL table.</p>
+
+          <p><i>SQL Update Prompt</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p>By the end of this process, we've gone from unstructured transcript data into structured SQL data! Finally, GPT cleans the table and uses it to answer the initial question. </p>
+
+          <p><i>Cleaned SQL Table Generated</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p><b>Method 3: Recursive Summarization</b></p>
+
+          <p>For the second method, we use recursive summarization. Recursive summarization is necessary here due to the 8k token limit imposed by the OpenAI API. </p>
+
+
+          <script id="asciicast-Ys2rH36AlF7RIdzZbJiorhMcc" src="https://asciinema.org/a/Ys2rH36AlF7RIdzZbJiorhMcc.js" async></script>
+
+          <p>First, we determine a set of sub-questions necessary to answer the original question. For each of these sub-questions, we determine a set of queries that would render relevant facts. Next, for each query, we search the vector store for queries or facts that are similar to the embedded query. For each query nearby in vector space, we pull the corresponding fact. We then have a list of facts. </p>
+
+          <p>Finally, we recursively summarize until the original question is answered. This involves summarizing the facts to answer the sub-query, summarizing the queries to answer the sub-question, and summarizing the sub-questions to answer the original question. The final summary is then returned to the user.</p>
+
+          <p>The algorithm roughly works like this: </p>
+
+          <p><i>Psuedocode</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+          <img style={articleStyles.embeds} src={recursiveSummarization} />
+          <p style={{ ...articleStyles.sidenotes, textAlign: "center" }}>Recursive Summarization Algorithm</p>
+
+          <p>Each of these computations on the way down and up uses a call to an LLM (in the default case, GPT-3). On the way down, we generate sub-questions and queries that would be necessary to answer the question. On the way up, we ask the LLM to summarize the results of those queries.</p>
+
+          <p>After recursing all the way back up, we have our answer!</p>
+
+          <h4 style={articleStyles.heading}>Final Answer Selection</h4>
+
+          <p>Finally, with the answer produced from the third and final method complete, we ask the model to pick the best answer of the three.</p>
+
+          <p><i>Answer Selection Prompt</i></p>
+          <CopyBlock
+            text={"add code here"}
+            language={"text"}
+            showLineNumbers={false}
+            theme={anOldHope}
+            wrapLines
+          />
+
+          <p>We're sure there are many other amazing methods that could work for answering queries, these were just a few ones to start. If you have any ideas, feel free to play with the prompts or open a PR with a new method!</p>
           
+          <h4 style={articleStyles.heading}>Infrastructure Used</h4>
+
+          <p>We extensively used Langchain's abstractions for managing prompts — they were great, and the built-in LLM caching feature saved us days of work. It was convenient to have time-tested prompts available for various use cases to iterate from, and we appreciated that we were able to get started right away, but also that the library could accommodate us as our needs became more complex.</p>
+          
+          <p>We needed somewhere to store and efficiently query the embeddings, and we discovered Pinecone! We were ready for it to be as complicated as the first time we used mySQL, but it just worked.</p>
+
+          <h4 style={articleStyles.heading}>Conclusion</h4>
+
+          <p>Use Summ to ask questions about your transcripts! You can get started here.</p>
+
+          <p>To help you think about how you might use Summ, here are some examples of when this came in handy for our friends:</p>
+
+          <p><b>Corinne Riley at Greylock used the tool to compare products during due diligence.</b> As a VC diligencing a market or a specific company, she typically conducts numerous customer and expert calls. She uses Summ to answer questions like "Compare Ramp and Brex products" or "What criteria do customers use to evaluate Ramp and Brex?"</p>
+          <p><b>Eric Liu at Notion suggested using Summ to inform messaging and strategy for top of funnel sales.</b> Transcript information can inform outbound emails, marketing on the website, and sales call scripts — you could ask Summ a question like “What are the top reasons that people are inquiring about our software?” or "Which competitors are our leads most concerned about?".</p>
+          <p><b>We also recommend using Summ to query voice memos of your own notes, thoughts, or dreams.</b> You can explore your thoughts by using queries like "What are some of my thoughts on rationality?" or  "What are some common themes in my dreams?"</p>
 
 
-          {/* Endnotes */}
-          <div style={articleStyles.footnotes}>
-            <hr style={articleStyles.divider} />
-            <p>Thanks to Ginevra Davis for feedback on this post.</p>
-          </div>
+          <p>You can install the library <a href="https://github.com/yasyf/summ/">here</a>, and find the docs <a href="https://summ.readthedocs.io/">here</a>. The library is very modular so we would love to have contributors experiment with different prompts — there's a lot of improvement to be done in that area!</p>
+          
+          <p>We'd love to hear how you use this! Feel free to shoot us an email at me `at` markiewagner.com or @yasyf on Twitter.</p>
+          
         </div>
-      </div>
-      <div style={articleStyles.sidenoteContainer}>
-        {/* Footnotes Column */}
-        {/* TODO: figure out how to handle for mobile/floating sidenotes. This div hack sucks ass */}
-        <div style={{ marginTop: "300vh", marginBottom: "280vh" }}>
-          <div style={articleStyles.sidenotes}>1: Evidenced during a review of the MatchSC, MatchUT, MatchClaremont data (a matchmaking experiment I ran spanning 30k+ undergrads across 7 college institutions).</div>
-          <div style={articleStyles.sidenotes}>2: Those who don't "fit in" are forced to work harder to find kindred spirits - long live the long tail of hyper-specific friend groups and subcultures!</div>
-        </div>
-        <div style={articleStyles.sidenotes}>3: This data consists of some of the most studied psychological tests such as an abridged five-factor personality test and Schwartz value survey, as well as a handful of other questions listed here.</div>
-        <div style={articleStyles.sidenotes}>4: Interestingly, the "highest ranked" Greek life organizations exist at the outermost edges of the personality clusters.</div>
-        <div style={articleStyles.sidenotes}>5: add sentence of what I think the PCAs could be the frat to softboi duality</div>
       </div>
       <div style={articleStyles.gutter}>
         {/* Any right gutter content goes here */}
