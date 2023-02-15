@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { HomePage } from "./screens/HomePage";
 import { SocialInfra } from "./screens/SocialInfra";
+import { Summ } from "./screens/Summ";
 
 function App() {
   return (
@@ -11,6 +12,11 @@ function App() {
           exact
           path="/social-infra"
           component={SocialInfra}
+        />
+        <Route
+          exact
+          path="/summ"
+          component={Summ}
         />
       </Switch>
     </Router>
