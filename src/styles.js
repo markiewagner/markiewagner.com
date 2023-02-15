@@ -80,7 +80,7 @@ export const articleStyles = {
   },
   divider: {
     border: 0,
-    borderTop: "1px solid #3B5824",
+    borderTop: "1px solid #000000",
   },
   body: {
     fontFamily: "IBM Plex Serif",

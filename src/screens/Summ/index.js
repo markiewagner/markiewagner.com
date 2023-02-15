@@ -215,14 +215,15 @@ export const Summ = () => {
         <div style={articleStyles.body}>
           <iframe
             title="asciinema"
-            src="https://asciinema.org/a/6dNMwGgNrmBrnFjyFjbJJ2xLR/iframe?rows=300&preload=1"
+            src="https://asciinema.org/a/6dNMwGgNrmBrnFjyFjbJJ2xLR/iframe?rows=300&preload=1&autoplay=1"
             id="asciicast-iframe-6dNMwGgNrmBrnFjyFjbJJ2xLR"
             name="asciicast-iframe-6dNMwGgNrmBrnFjyFjbJJ2xLR"
             scrolling="no"
             allowfullscreen="true"
             style={{
               overflow: "hidden",
-              margin: "0px",
+              marginTop: "30px",
+              marginBottom: "30px",
               border: "0px",
               display: "inline-block",
               width: "100%",
