@@ -71,8 +71,8 @@ export const articleStyles = {
     fontWeight: 400,
   },
   authorSection: {
-    marginTop: "100px",
-    marginBottom: "100px",
+    marginTop: "50px",
+    marginBottom: "75px",
     lineHeight: 0.5,
   },
   date: {
@@ -98,6 +98,12 @@ export const articleStyles = {
     fontFamily: "IBM Plex Sans",
     fontSize: 20,
     fontWeight: 600,
+    marginTop: "50px",
+  },
+  boldHeading: {
+    fontFamily: "IBM Plex Sans",
+    fontSize: 16,
+    fontWeight: 500,
     marginTop: "50px",
   },
   backButton: {

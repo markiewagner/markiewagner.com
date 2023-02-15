@@ -229,7 +229,7 @@ export const Summ = () => {
           <CopyBlock
             text={fact_prompt}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             theme={anOldHope}
             wrapLines
           />
@@ -247,7 +247,7 @@ export const Summ = () => {
           <CopyBlock
             text={fact_extraction_example}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -259,7 +259,7 @@ export const Summ = () => {
           <CopyBlock
             text={fact_extraction_example_gen}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -314,7 +314,7 @@ export const Summ = () => {
           </p>
 
           <p>
-            <b>Method 1: Structured Data Generation (JSON)</b>
+            <h4 style={articleStyles.boldHeading}>Method 1: Structured Data Generation (JSON)</h4>
           </p>
 
           <p>
@@ -330,7 +330,7 @@ export const Summ = () => {
           <CopyBlock
             text={json_gen_instructions}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -342,7 +342,7 @@ export const Summ = () => {
           <CopyBlock
             text={json_gen_ex}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -365,7 +365,7 @@ export const Summ = () => {
           <CopyBlock
             text={json_cleaned}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -377,14 +377,14 @@ export const Summ = () => {
           <CopyBlock
             text={example_answer}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
 
           <p>
-            <b>Method 2: Structured Data Generation (SQL)</b>
+           <h4 style={articleStyles.boldHeading}>Method 2: Structured Data Generation (SQL)</h4>
           </p>
 
           <p>
@@ -404,7 +404,7 @@ export const Summ = () => {
           <CopyBlock
             text={sql_prompt}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -422,7 +422,7 @@ export const Summ = () => {
           <CopyBlock
             text={sql_update_prompt}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -440,14 +440,14 @@ export const Summ = () => {
           <CopyBlock
             text={sql_answer}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
 
           <p>
-            <b>Method 3: Recursive Summarization</b>
+            <h4 style={articleStyles.boldHeading}>Method 3: Recursive Summarization</h4>
           </p>
 
           <p>
@@ -486,8 +486,8 @@ export const Summ = () => {
           </p>
           <CopyBlock
             text={get_facts_code}
-            language={"json"}
-            customStyle={{ padding: "1em" }}
+            language={"python"}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
@@ -520,7 +520,7 @@ export const Summ = () => {
           <CopyBlock
             text={final_answer_prompt}
             language={"json"}
-            customStyle={{ padding: "1em" }}
+            customStyle={{ padding: "1em", fontSize: 12}}
             showLineNumbers={false}
             theme={anOldHope}
             wrapLines
