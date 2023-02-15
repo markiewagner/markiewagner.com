@@ -8,7 +8,7 @@ export const homeStyles = {
     display: "flex",
     flexDirection: "column",
     width: isMobile ? "90vw" : 550,
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: "IBM Plex Sans",
     fontWeight: 400,
     lineHeight: 1.5,
   },
@@ -44,7 +44,7 @@ export const articleStyles = {
     left: 0,
     top: 0,
     display: "flex",
-    fontFamily: 'IBM Plex Sans',
+    fontFamily: "IBM Plex Sans",
   },
   gutter: {
     width: isMobile ? "5vw" : "25vw",
@@ -59,7 +59,7 @@ export const articleStyles = {
     marginLeft: "24px",
   },
   title: {
-    fontFamily: 'Newsreader',
+    fontFamily: "Newsreader",
     fontWeight: 400,
     fontSize: 50,
     lineHeight: isMobile ? 1.2 : 1.5,
@@ -67,7 +67,7 @@ export const articleStyles = {
   subtitle: {
     fontSize: 18,
     lineHeight: 1.5,
-    fontStyle: 'italic',
+    fontStyle: "italic",
     fontWeight: 400,
   },
   authorSection: {
@@ -101,7 +101,11 @@ export const articleStyles = {
   },
   links: {
     textColor: "#000EEE",
-    textDecoration: 'none',
+    textDecoration: "none",
+    fontWeight: "bold",
+    "&:visited": {
+      color: "#000EEE",
+    },
   },
   sidenotes: {
     fontFamily: "Inter",
@@ -122,5 +126,5 @@ export const articleStyles = {
     width: "100%",
     objectFit: "contain",
     marginTop: "24px",
-  }
+  },
 };
