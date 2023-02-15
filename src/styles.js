@@ -27,6 +27,11 @@ export const homeStyles = {
   links: {
     textColor: "#000EEE",
     textDecoration: 'none',
+  },
+  socials: {
+    textColor: "#000EEE",
+    textDecoration: 'none',
+    fontSize: 15,
   }
 };
 

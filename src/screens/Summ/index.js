@@ -9,9 +9,11 @@ import {anOldHope, CopyBlock } from "react-code-blocks";
 const fact_prompt = "Your task is to take the context of a conversation, and a paragraph, and extract any pertinent facts from it. \
 The facts should only cover new information introduced in the paragraph. The context is only for background; do not use it to generate facts. \n \n\
 You will also generate a new context, by taking the old context and modifying it if needed to account for the additional paragraph. You do not need \
-to change the old context if it is suitable; simply return it again. \n \n\
+to change the old context if it is suitable; simply return it again. \n \n\""
+
+const fact_extraction_example = "\
 \
-Here is an example: \n\n \
+Here is an example: \n\n\
 \
 Context: The conversation so far has covered the backround of the speaker. He is an RPA developer. \n \n\
 \
@@ -19,30 +21,21 @@ Chunk: We had a client where they would, they had like a huge database legacy da
 in the store. Whenever they would whenever they would do any type of like inventory accounts, they would shut \
 down for like eight hours but they wouldn't go in there and see the differences between like the database and \
 it will take them 16 hours to do. Yes, insane. We built a bot that will go in there and do like we like to call \
- it, auditing and reconciliation of all the inventories, as long as they gave us like a spreadsheet, and you \
- could do it in an hour. \n \n\
-\
-Facts: \n \
+it, auditing and reconciliation of all the inventories, as long as they gave us like a spreadsheet, and you \
+could do it in an hour. \n \n\
+"
+
+const fact_extraction_example_gen = "Facts: \n \
 - A client had a large legacy database for inventory in their store.  \n \
 - The inventory reconciliation process would shut down the store for 8 hours.  \n \
 - The process of reconciling the database would take 16 hours to complete.  \n \
 - A bot was built to perform inventory auditing and reconciliation.  \n \
 - The bot can complete the process in an hour as long as a spreadsheet is provided.  \n \
-\
+\n \
 New Context: An RPA developer talks about a bot he made. The bot was created to reconcile \
 a client's inventory database which used to take 16 hours to complete and shut down the store \
 for 8 hours, and can now be done in an hour. \n \n\
-\
-------------------------------- \n \n\
-Now the real one: \n \n\
-\
-\
-Context: {{ context }} \n \n\
-\
-Chunk: {{ chunk }} \n \n\
-\
-Facts: \n\
--"
+"
 
 export const Summ = () => {
   return (
@@ -90,7 +83,7 @@ export const Summ = () => {
 
           <p><i>Fact Extraction Example Context and Paragraph</i></p>
           <CopyBlock
-            text={"add code here"}
+            text={fact_extraction_example}
             language={"text"}
             showLineNumbers={false}
             theme={anOldHope}
@@ -100,7 +93,7 @@ export const Summ = () => {
 
           <p><i>Fact Extraction Example Generated Facts</i></p>
           <CopyBlock
-            text={"add code here"}
+            text={fact_extraction_example_gen}
             language={"text"}
             showLineNumbers={false}
             theme={anOldHope}

@@ -14,16 +14,24 @@ export const HomePage = () => {
         <p>Before Delphi, I was a researcher at Stanford and Waymo.</p>
         <p><i>Interests include cult building, new nations, psychographics, zk-proof applications, automating everything, and artificial intelligence (particularly reinforcement learning and graph neural nets).</i></p>
         {/* Links */}
-        <br />
+        
         <a style={homeStyles.links} href={"https://twitter.com/markiewagner"}>
           Twitter
         </a>
         <br />
-        {/* <p>
-          <a style={homeStyles.links} href={"/social-infra"}>
-            Building Modern Social Infrastructure
+        <br />
+        { <p>
+
+          <p><b>Writing</b></p>
+          <a style={homeStyles.links} href={"https://www.piratewires.com/p/choose-good-quests"}>
+            Choose Good Quests
           </a>
-        </p> */}
+          <br>
+          </br>
+          <a style={homeStyles.links} href={"/summ"}>
+            Summ: Transcript Search and Summarization
+          </a>
+        </p> }
       </div>
 
     </div>
