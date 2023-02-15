@@ -203,8 +203,8 @@ export const Summ = () => {
           <h3 style={articleStyles.heading}>Goal</h3>
           <p>
             We set out to build a tool that could thoroughly answer questions
-            about a set of uploaded transcripts. It needed to surface and draw
-            up all relevant information facts across all the conversations and
+            about a set of uploaded transcripts. It needed to surface
+            all relevant information facts across all conversations, summarize those results, and
             filter by transcript tags such as department, role, and company
             industry.
           </p>
