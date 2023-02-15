@@ -6,37 +6,150 @@ import recursiveSummarization from "../../assets/recursive_summarization.png";
 import { articleStyles } from "../../styles";
 
 
-const fact_prompt = "Your task is to take the context of a conversation, and a paragraph, and extract any pertinent facts from it. \
-The facts should only cover new information introduced in the paragraph. The context is only for background; do not use it to generate facts. \n \n\
-You will also generate a new context, by taking the old context and modifying it if needed to account for the additional paragraph. You do not need \
-to change the old context if it is suitable; simply return it again. \n \n\""
+const fact_prompt = `Your task is to take the context of a conversation, and a paragraph, and extract any pertinent facts from it.
+The facts should only cover new information introduced in the paragraph. The context is only for background; do not use it to generate facts. 
 
-const fact_extraction_example = "\
-\
-Here is an example: \n\n\
-\
-Context: The conversation so far has covered the backround of the speaker. He is an RPA developer. \n \n\
-\
-Chunk: We had a client where they would, they had like a huge database legacy database of like their inventory \
-in the store. Whenever they would whenever they would do any type of like inventory accounts, they would shut \
-down for like eight hours but they wouldn't go in there and see the differences between like the database and \
-it will take them 16 hours to do. Yes, insane. We built a bot that will go in there and do like we like to call \
-it, auditing and reconciliation of all the inventories, as long as they gave us like a spreadsheet, and you \
-could do it in an hour. \n \n\
-"
+You will also generate a new context, by taking the old context and modifying it if needed to account for the additional paragraph. You do not need 
+to change the old context if it is suitable; simply return it again.`
 
-const fact_extraction_example_gen = "Facts: \n \
-- A client had a large legacy database for inventory in their store.  \n \
-- The inventory reconciliation process would shut down the store for 8 hours.  \n \
-- The process of reconciling the database would take 16 hours to complete.  \n \
-- A bot was built to perform inventory auditing and reconciliation.  \n \
-- The bot can complete the process in an hour as long as a spreadsheet is provided.  \n \
-\n \
-New Context: An RPA developer talks about a bot he made. The bot was created to reconcile \
-a client's inventory database which used to take 16 hours to complete and shut down the store \
-for 8 hours, and can now be done in an hour. \n \n\
-"
+const fact_extraction_example = `Here is an example:
 
+Context: The conversation so far has covered the backround of the speaker. He is an RPA developer. 
+
+Chunk: We had a client where they would, they had like a huge database legacy database of like their inventory 
+in the store. Whenever they would whenever they would do any type of like inventory accounts, they would shut 
+down for like eight hours but they wouldn't go in there and see the differences between like the database and 
+it will take them 16 hours to do. Yes, insane. We built a bot that will go in there and do like we like to call 
+it, auditing and reconciliation of all the inventories, as long as they gave us like a spreadsheet, and you 
+could do it in an hour.
+`
+
+const fact_extraction_example_gen = `Facts:
+- A client had a large legacy database for inventory in their store.
+- The inventory reconciliation process would shut down the store for 8 hours.
+- The process of reconciling the database would take 16 hours to complete. 
+- A bot was built to perform inventory auditing and reconciliation. 
+- The bot can complete the process in an hour as long as a spreadsheet is provided.
+
+New Context: An RPA developer talks about a bot he made. The bot was created to reconcile 
+a client's inventory database which used to take 16 hours to complete and shut down the store 
+for 8 hours, and can now be done in an hour.
+`
+
+const json_gen_instructions = `Use the query to determine which structured data is needed, and for each, write a specification which will extract and collect the data.
+
+If the query is qualitative, you can return an empty list.
+Your response must be in valid JSON format. Do not extract the information yet, just describe how to do so.
+
+The options for type are: {'string', 'number', 'list'}.
+The options for collect are: {'list', 'sum', 'count', 'average'}.
+The prompt should minimize variance in the response.
+`
+
+
+const json_gen_ex = `Prompt: What departments were surveyed, and how many times did people prefer Google over Bing?
+Response:
+
+[
+ {
+  {
+    "metric": "department", 
+    "prompt": "Extract the company department that the user of this interview works in.", 
+    "type": "string", 
+    "collect": "list"}},
+  {
+  {
+    "metric": "preferred", 
+    "prompt": "Which of the following options best represents which search engine was preferred?", 
+    "type": "enum", 
+    "options": ["GOOGLE", "BING", "OTHER"], 
+    "collect": "count_unique"
+  }
+ },
+]
+`
+
+const json_cleaned = `
+[
+  {
+    "department": ["Engineering", "Sales", "Marketing"],
+    "preferred": {"GOOGLE": 3, "BING": 1}
+    "feelings": ["Awesome", "Liked It", "Sweet"],
+  },
+]
+`
+
+const example_answer = `What departments were surveyed, and how many times did people prefer Google over Bing? 
+
+People preferred Google over Bing 3 times. Engineering, Sales, and Marketing were surveyed.
+`
+
+const sql_prompt = `Use the query to determine which structured data is needed, and use this to create a SQL table DDL.
+
+
+Include a confidence score column with values from 0 to 100.
+If the query is qualitative, you can return an empty table.
+
+
+Your response must be valid and complete SQL.
+
+
+Prompt: {{ query }}
+
+
+DDL:
+`
+
+const sql_update_prompt = `You will be provided with the schema for a SQL table. Write between zero and three SQL statements which will insert data into the table. You do not need to use all three statements. Do not insert data which is not relevant to the query. Do not insert data which is ambiguous. Do not insert data which is noisy or too long. Only insert data that is derived from the document provided. Do not guess or make up data. For each row, record your confidence that the data is relevant to the query as a number from 0 to 100, using the confidence score column. Your response must be valid and complete SQL.You will be provided with the schema for a SQL table.
+
+Query: {{ query }}
+Document:
+{{ text }}
+
+Schema:
+{{ schema }}
+
+Response:
+`
+
+const sql_answer = `Collecting data (SQLStructurer) for: List the treatments attempted on Cronutt, 
+and how he responded to each one
+
+
+Answer: List the treatments attempted on Cronutt, and how he responded to each 
+one
+
+
+Treatment         | Response
+------------------|-------------------
+Behavioral Therapy| Improved, but not completely cured
+Medication        | Improved, but not completely cured
+Hypnosis          | No improvement
+Exposure Therapy  | Improved, but not completely cured
+Cognitive Behavioral Therapy | Improved, but not completely cured
+`
+
+const get_facts_code = `def get_facts(question):
+  subquestions = how_to_answer(question)
+  queries = [query for sq in subquestions for query in relevant_queries(sq)]
+  facts = [fact for query in queries for fact in nearby_facts(query)]
+return facts`
+
+const final_answer_prompt = `An answer was produced for a question using several different methods.
+First, evaluate how clear, specific, and thorough each answer is.
+Then, select the best one and return it inside a code block.
+If you are unsure what the best answer is, use the most precise one.
+You can clean up the answer as you return it, but do not change the meaning.
+
+The question is: {query}
+
+Method:
+{method}
+Answer:
+{answer}
+
+...
+`
 
 export const Summ = () => {
   return (
@@ -138,10 +251,10 @@ export const Summ = () => {
             <i>Fact Extraction Example Context and Paragraph</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={fact_extraction_example}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -150,10 +263,10 @@ export const Summ = () => {
             <i>Fact Extraction Example Generated Facts</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={fact_extraction_example_gen}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -221,10 +334,10 @@ export const Summ = () => {
             <i>JSON Generation Instructions</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={json_gen_instructions}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -233,10 +346,10 @@ export const Summ = () => {
             <i>JSON Generation Example</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={json_gen_ex}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -256,10 +369,10 @@ export const Summ = () => {
             <i>Cleaned Document</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={json_cleaned}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -268,10 +381,10 @@ export const Summ = () => {
             <i>Example Answer</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={example_answer}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -295,10 +408,10 @@ export const Summ = () => {
             <i>SQL Generation Prompt</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={sql_prompt}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -313,10 +426,10 @@ export const Summ = () => {
             <i>SQL Update Prompt</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={sql_update_prompt}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -331,10 +444,10 @@ export const Summ = () => {
             <i>Cleaned SQL Table Generated</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={sql_answer}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -378,10 +491,10 @@ export const Summ = () => {
             <i>Psuedocode</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={get_facts_code}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -411,10 +524,10 @@ export const Summ = () => {
             <i>Answer Selection Prompt</i>
           </p>
           <CopyBlock
-            text={"add code here"}
+            text={final_answer_prompt}
             language={"json"}
             customStyle={{ padding: "1em" }}
-            showLineNumbers={true}
+            showLineNumbers={false}
             theme={anOldHope}
             wrapLines
           />
@@ -447,7 +560,12 @@ export const Summ = () => {
 
           <p>
             Use Summ to ask questions about your transcripts! You can get
-            started here.
+            started <a
+              style={articleStyles.links}
+              href="https://github.com/yasyf/summ/"
+            >
+              here
+            </a>.
           </p>
 
           <p>
