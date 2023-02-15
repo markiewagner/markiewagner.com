@@ -579,7 +579,7 @@ export const Summ = () => {
           </p>
           <p>
             <b>
-              Eric Liu at Notion suggested using Summ to inform messaging and
+              A friend who works in bizops suggested using Summ to inform messaging and
               strategy for top of funnel sales.
             </b>{" "}
             Transcript information can inform outbound emails, marketing on the
