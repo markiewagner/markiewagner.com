@@ -167,11 +167,6 @@ export const Summ = () => {
         <h1 style={articleStyles.title}>
           Summ: Transcript Search and Summarization
         </h1>
-        {/* Subtitle */}
-        <h2 style={articleStyles.subtitle}>
-          Summ provides intelligent search and question-answering across large
-          sets of transcripts.
-        </h2>
         {/* Author Section */}
         <div style={articleStyles.authorSection}>
           <p style={articleStyles.date}>Feb 20th, 2023</p>
