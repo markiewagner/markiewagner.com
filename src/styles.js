@@ -50,7 +50,7 @@ export const articleStyles = {
     width: isMobile ? "5vw" : "25vw",
   },
   textContainer: {
-    width: isMobile ? "90vw" : "37.5vw",
+    width: isMobile ? "90vw" : "41.5vw",
     marginTop: isMobile ? "5vw" : "10vh",
     marginBottom: isMobile ? "5vw" : "10vh",
   },
@@ -72,7 +72,7 @@ export const articleStyles = {
   },
   authorSection: {
     marginTop: "50px",
-    marginBottom: "75px",
+    marginBottom: "px",
     lineHeight: 0.5,
   },
   date: {
