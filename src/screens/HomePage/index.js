@@ -1,5 +1,6 @@
 import React from "react";
 import { homeStyles } from "../../styles";
+import { Analytics } from '@vercel/analytics/react';
 
 export const HomePage = () => {
   return (
@@ -33,7 +34,8 @@ export const HomePage = () => {
           </a>
         </p> }
       </div>
-
+    
+      <Analytics />
     </div>
   );
 };
