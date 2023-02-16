@@ -19,8 +19,6 @@ function App() {
           component={Summ}
         />
       </Switch>
-
-      <Analytics />
     </Router>
   );
 }
