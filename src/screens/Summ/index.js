@@ -207,7 +207,7 @@ export const Summ = () => {
         </h1>
         {/* Author Section */}
         <div style={articleStyles.authorSection}>
-          <p style={articleStyles.date}>Feb 20th, 2023</p>
+          <p style={articleStyles.date}>Feb 16th, 2023</p>
           <p>Markie Wagner and Yasyf Mohamedali</p>
           <hr style={articleStyles.divider} />
         </div>
